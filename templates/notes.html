@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="/static/imgs/applogo.png">
+</head>
+
+<body>
+    {% for msg in messages %}
+    <!-- {{msg}} -->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    <nav class="navbar navbar-expand-lg bg-body-dark">
+        <div class="container-fluid">
+            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+            <a class="navbar-brand" href="#">
+                <img src="/static/imgs/applogo.png" alt="Bootstrap" width="30" height="24">
+                NotesApp
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Notes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Profile</a>
+                    </li>
+                </ul>
+            </div>
+            {% if cuser is none %}
+            <button type="button" class="btn btn-outline-primary">Signin</button>
+            <button type="button" class="btn btn-outline-warning mx-2">Signup</button>
+            {% else %}
+            <!-- <button type="button" class="btn btn-outline-danger ">Logout</button> -->
+            <!-- <a class="btn btn-outline-danger"  href="/userlogout">Logout</a> -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    {{cuser}}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/profile">Update Profile</a></li>
+                    <li><a class="dropdown-item" href="/userlogout">Logout</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+    <!-- Notes Form Start -->
+    <div class="container my-5">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                <input type="text" name="querytitle" class="form-control" id="floatingInput"
+                    placeholder="name@example.com">
+                <label for="floatingInput">Query title</label>
+            </div>
+            <select class="form-select form-select-lg mb-3" name="cate" aria-label="Large select example">
+                <option selected>Select Any Option</option>
+                <option>Core Python</option>
+                <option>Python</option>
+                <option>PHP</option>
+                <option>Android With Kotlin</option>
+                <option>iOS</option>
+                <option>Other</option>
+            </select>
+            <div>
+                <label for="formFileLg" class="form-label">Select Your Files.</label>
+                <input class="form-control form-control-lg" name="myfile" id="formFileLg" type="file">
+            </div>
+            <div class="mb-3 my-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Comments.</label>
+                <textarea class="form-control" name="comments" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button type="Submit" class="btn btn-primary btn-lg">Submit</button>
+        </form>
+    </div>
+    <!-- Notes Form End! -->
+</body>
+
+</html>
